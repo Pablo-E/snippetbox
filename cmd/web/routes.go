@@ -39,6 +39,7 @@ func (app *application) routes() http.Handler {
 	// And then create the routes using the appropriate methods, patterns and
 	// handlers.
 	router.Handler(http.MethodGet, "/", noSurf(app.sessionManager.LoadAndSave(app.authenticate(http.HandlerFunc(app.home)))))
+	router.Handler(http.MethodGet, "/about", noSurf(app.sessionManager.LoadAndSave(app.authenticate(http.HandlerFunc(app.about)))))
 	router.Handler(http.MethodGet, "/snippet/view/:id", noSurf(app.sessionManager.LoadAndSave(app.authenticate(http.HandlerFunc(app.snippetView)))))
 	router.Handler(http.MethodGet, "/user/signup", noSurf(app.sessionManager.LoadAndSave(app.authenticate(http.HandlerFunc(app.userSignup)))))
 	router.Handler(http.MethodPost, "/user/signup", noSurf(app.sessionManager.LoadAndSave(app.authenticate(http.HandlerFunc(app.userSignupPost)))))
