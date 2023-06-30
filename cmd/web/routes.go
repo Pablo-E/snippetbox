@@ -34,6 +34,8 @@ func (app *application) routes() http.Handler {
 	// file will be served (so long as it exists).
 	router.Handler(http.MethodGet, "/static/*filepath", fileServer)
 
+	router.HandlerFunc(http.MethodGet, "/ping", ping)
+
 	// And then create the routes using the appropriate methods, patterns and
 	// handlers.
 	router.Handler(http.MethodGet, "/", noSurf(app.sessionManager.LoadAndSave(app.authenticate(http.HandlerFunc(app.home)))))
