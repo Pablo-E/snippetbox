@@ -54,10 +54,10 @@ func (app *application) recoverPanic(next http.Handler) http.Handler {
 
 func (app *application) requireAuthentication(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// If the user is not authenticated, redirect them to the login page and
-		// return from the middleware chain so that no subsequent handlers in
-		// the chain are executed.
 		if !app.isAuthenticated(r) {
+			// Add the path that the user is trying to access to their session
+			// data.
+			app.sessionManager.Put(r.Context(), "redirectPathAfterLogin", r.URL.Path)
 			http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 			return
 		}
