@@ -48,6 +48,7 @@ func (app *application) routes() http.Handler {
 
 	router.Handler(http.MethodGet, "/snippet/create", noSurf(app.sessionManager.LoadAndSave(app.authenticate(app.requireAuthentication(http.HandlerFunc(app.snippetCreate))))))
 	router.Handler(http.MethodPost, "/snippet/create", noSurf(app.sessionManager.LoadAndSave(app.authenticate(app.requireAuthentication(http.HandlerFunc(app.snippetCreatePost))))))
+	router.Handler(http.MethodGet, "/account/view", noSurf(app.sessionManager.LoadAndSave(app.authenticate(app.requireAuthentication(http.HandlerFunc(app.accountView))))))
 	router.Handler(http.MethodPost, "/user/logout", noSurf(app.sessionManager.LoadAndSave(app.authenticate(app.requireAuthentication(http.HandlerFunc(app.userLogoutPost))))))
 
 	return app.recoverPanic(app.logRequest(secureHeaders(router)))
